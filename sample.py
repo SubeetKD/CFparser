@@ -11,5 +11,5 @@ for _ in title:
 	name = _.find(class_='title').text
 	name,shit = name.split('.')
 	print(name)
-	input_data = _.find(class_='input').pre.text
+	input_data = _.find(class_='input').pre.text.lstrip()
 	print(input_data)
