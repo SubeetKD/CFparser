@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 import requests , sys
-import string , os , shutil
+import string , os
 
 # your template
 template = r"""#include <bits/stdc++.h>
@@ -117,15 +117,14 @@ def contest_parser(id,base_url='https://codeforces.com/contest/'):
 
 
 def main():
-	contest_id = input('Single Question or Contest?\n')
-	if contest_id in ['a','all','ALL']:
-		contest_id = int(input('Enter the id of the contest.\n'))
-		contest_parser(id=contest_id)
-		print('Parsing of Contest Completed.')
+	url = input('Enter the contest id or link to the question\n')
+	if url.isdigit():
+		contest_parser(id=url)
+		print('Parsing of contest is done')
 	else:
-		contest_id = input("Enter the url of question.\n")
-		question_name = question_parser(url=contest_id)
-		print(f'Parsing of {question_name} is completed.')
+		#assuming user entered correnct url
+		question_name = question_parser(url=url)
+		print(f'Parsing of {question_name} is done successfully')
 
 if __name__ == '__main__':
 	main()
