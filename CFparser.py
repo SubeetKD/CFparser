@@ -2,9 +2,9 @@ from bs4 import BeautifulSoup
 import requests , sys
 import string , os , shutil
 
-# your template 
+# your template
 template = r"""#include <bits/stdc++.h>
-#define int long long 
+#define int long long
 #define IOS ios_base::sync_with_stdio(false)
 
 using namespace std;
@@ -17,7 +17,7 @@ int32_t main(){IOS;
 
 bash_script=r"""#!/bin/bash
 
-g++ -std=c++14 -o sol sol.cpp 
+g++ -std=c++14 -o sol sol.cpp
 for ((i=1;i<=$1;i++));
 do
 	echo $i"th test's differnce:"
@@ -51,16 +51,22 @@ def question_parser(url):
 		cnt = 1
 		inputs = test_cases.find_all(class_=put)
 		for test_case in inputs:
-			file_data = test_case.pre.text.splitlines()
+			file_data = str(test_case.pre)
+			# if they use line breakers
+			file_data = file_data.replace('<pre>','')
+			file_data = file_data.replace('</pre>','')
+			file_data = file_data.replace('<br/>','\n')
+			file_data = file_data.split('\n')
 			while file_data[0] in ['\n','']:
 				file_data.pop(0)
-			#file_data.pop(0) # uncomment if input has leading line 
+			#file_data.pop(0) # uncomment if input has leading line
 			print(f'{put+str(cnt)} file : {file_data}')
 			with open(os.path.abspath(os.path.join(cur_path,put+str(cnt))),'w') as f:
-				f.write(file_data+'\n')
+				for line in file_data:
+					f.write(line+'\n')
 			cnt += 1
 	return alpha
-	
+
 
 
 def contest_parser(id,base_url='https://codeforces.com/contest/'):
@@ -79,7 +85,7 @@ def contest_parser(id,base_url='https://codeforces.com/contest/'):
 		except OSError:
 			pass
 		# creating template for solving problem
-		cur_path = os.path.abspath(os.path.join(cur_path,name)) # cur path is the folder of the question 
+		cur_path = os.path.abspath(os.path.join(cur_path,name)) # cur path is the folder of the question
 		with open(os.path.abspath(os.path.join(cur_path,'sol.cpp')),'w') as f :
 			f.write(template)
 			f.close()
@@ -94,10 +100,15 @@ def contest_parser(id,base_url='https://codeforces.com/contest/'):
 			cnt = 1 # numbering cases
 			test_cases = problem.find_all(class_=put)
 			for test_case in test_cases:
-				file_data = test_case.pre.text.splitlines()
+				file_data = str(test_case.pre)
+				# if they use line breakers
+				file_data = file_data.replace('<pre>','')
+				file_data = file_data.replace('</pre>','')
+				file_data = file_data.replace('<br/>','\n')
+				file_data = file_data.split('\n')
 				while file_data[0] in ['','\n']:
 					file_data.pop(0)
-				#file_data.pop(0) #uncomment if leading blank line appear 
+				#file_data.pop(0) #uncomment if leading blank line appear
 				with open(os.path.abspath(os.path.join(cur_path,put+str(cnt))),'w') as f:
 					for line in file_data :
 						f.write(line+'\n')
