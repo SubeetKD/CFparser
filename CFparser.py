@@ -51,7 +51,7 @@ def question_parser(url):
 		cnt = 1
 		inputs = test_cases.find_all(class_=put)
 		for test_case in inputs:
-			file_data = test_case.pre.text
+			file_data = test_case.pre.text.splitlines()
 			while file_data[0] in ['\n','']:
 				file_data.pop(0)
 			#file_data.pop(0) # uncomment if input has leading line 
