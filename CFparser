@@ -17,14 +17,20 @@ int32_t main(){IOS;
 }
 """
 
-bash_script=r"""#!/bin/bash
+bash_script=r"""#!/bin/sh
 
-g++ -std=c++14 -o sol sol.cpp
-for ((i=1;i<=$1;i++));
+read test_case
+
+g++ -std=c++17 -o sol sol.cpp
+for ((i=1;i<=$test_case;i++));
 do
 	echo $i"th test's differnce:"
 	./sol<input$i>you$i
-	diff -u output$i you$i
+        echo "Your Output"
+        cat you$1 
+        echo "Answer : "
+        cat output$1
+        echo "============================================="
 done"""
 
 
@@ -41,7 +47,7 @@ def question_parser(url):
 	with open(os.path.abspath(os.path.join(cur_path,'sol.cpp')),'w') as f:
 		f.write(template)
 		f.close()
-	bash_file_location = os.path.abspath(os.path.join(cur_path,'run.sh'))
+	bash_file_location = os.path.abspath(os.path.join(cur_path,'run'))
 	with open(bash_file_location,'w') as f:
 		f.write(bash_script)
 		f.close()
@@ -91,7 +97,7 @@ def contest_parser(id,base_url='https://codeforces.com/contest/'):
 		with open(os.path.abspath(os.path.join(cur_path,'sol.cpp')),'w') as f :
 			f.write(template)
 			f.close()
-		bash_file_location = os.path.abspath(os.path.join(cur_path,'run.sh'))
+		bash_file_location = os.path.abspath(os.path.join(cur_path,'run'))
 		with open(bash_file_location,'w') as f:
 			f.write(bash_script)
 			f.close()
