@@ -23,15 +23,16 @@ bash_script = r"""#!/bin/sh
 read test_case
 
 g++ -std=c++17 -o sol sol.cpp
-for ((i=1;i<=$test_case;i++));
+for i in $(seq 1 1 $test_case)
 do
-	echo $i"th test's differnce:"
-	./sol<input$i>you$i
-        echo "Your Output"
-        cat you$1 
-        echo "Answer : "
-        cat output$1
-        echo "============================================="
+    echo $i"th test's differnce:"
+    echo "input${i}"
+    ./sol<"input$i">"you$i"
+    echo "Your Output"
+    cat "you$i"
+    echo "Answer : "
+    cat "output$i"
+    echo "============================================="
 done"""
 
 
