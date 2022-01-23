@@ -86,10 +86,18 @@ def contest_parser(id, base_url='https://codeforces.com/contest/'):
     problems = soup.find_all(class_='problemindexholder')
     # print(problems)
     # sys.exit(0)
+
+    try: 
+        os.mkdir(os.path.abspath(os.path.abspath(os.getcwd()) + "/" + id))
+    except OSError: 
+        print("unable to create contest folder")
+        sys.exit(1)
+
     for problem in problems:
         name = problem.find(class_='title').text
         name, other_things = name.split('.')
-        cur_path = os.path.abspath(os.getcwd())
+        cur_path = os.path.abspath(os.getcwd()) + "/" + id
+        print(cur_path)
         # creating folder for each question
         try:
             os.mkdir(os.path.abspath(os.path.join(cur_path, name)))
